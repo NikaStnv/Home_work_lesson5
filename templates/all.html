@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Всі транзакції</title>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .balance { font-size: 24px; margin: 20px 0; }
+        .income { color: green; }
+        .expense { color: red; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <h1>Всі транзакції</h1>
+
+    <div class="balance">
+        Баланс: {{ "%.2f"|format(balance) }} грн
+    </div>
+
+    <table>
+        <tr>
+            <th>Дата</th>
+            <th>Опис</th>
+            <th>Тип</th>
+            <th>Сума</th>
+            <th>Дії</th>
+        </tr>
+        {% for t in transactions %}
+        <tr>
+            <td>{{ t.date.strftime('%d.%m.%Y') }}</td>
+            <td>{{ t.description }}</td>
+            <td class="{{ t.transaction_type }}">
+                {% if t.transaction_type == 'income' %}Дохід{% else %}Витрата{% endif %}
+            </td>
+            <td>{{ "%.2f"|format(t.amount) }} грн</td>
+            <td>
+                <a href="/edit/{{ t.id }}">Редагувати</a> |
+                <a href="/delete/{{ t.id }}" onclick="return confirm('Видалити?')">Видалити</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p><a href="/">На головну</a></p>
+</body>
+</html>

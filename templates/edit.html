@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Редагувати</title>
+    <style>
+        body { font-family: Arial; max-width: 500px; margin: 0 auto; padding: 20px; }
+        input, select { width: 100%; padding: 8px; margin-bottom: 10px; }
+        button { padding: 8px 16px; }
+    </style>
+</head>
+<body>
+    <h1>Редагувати транзакцію</h1>
+
+    <form method="POST">
+        <input type="text" name="description" value="{{ transaction.description }}" required><br>
+
+        <select name="operation_type" required>
+            <option value="income" {% if transaction.transaction_type == 'income' %}selected{% endif %}>Дохід</option>
+            <option value="expense" {% if transaction.transaction_type == 'expense' %}selected{% endif %}>Витрата</option>
+        </select><br>
+
+        <input type="number" name="amount" step="0.01" value="{{ transaction.amount }}" required><br>
+
+        <input type="date" name="date" value="{{ transaction.date.strftime('%Y-%m-%d') }}" required><br>
+
+        <button type="submit">Зберегти</button>
+        <a href="/all">Скасувати</a>
+    </form>
+</body>
+</html>
